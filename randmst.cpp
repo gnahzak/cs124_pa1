@@ -17,7 +17,7 @@ int main() {
 void kruskal (vector<>& e, set<int>& v, int n, set<>& x) {
 
   // sort edges in e
-  sort(e);
+  std::sort(e.begin(), e.end(), compareEdges);
 
   // make sets for all vertices
   for (j = v.begin(); j != v.end(); j++){
@@ -39,7 +39,17 @@ void kruskal (vector<>& e, set<int>& v, int n, set<>& x) {
   return;
 }
 
-// uses mergesort to sort the edges from least to greatest length
-void sort(vector<>& edges){
 
+bool compareEdges (Edge e1, Edge e2) {
+  return e1.length < e2.length;
 }
+
+// uses mergesort to sort the edges from least to greatest length
+// void sort(vector<>& edges){
+//   int half1size = edges.size()/2;
+//   int half2size = edges.size()-half1size;
+
+//   if (half1size == 2) {
+
+//   }
+// }
