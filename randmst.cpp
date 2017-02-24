@@ -4,7 +4,11 @@ using namespace std;
 #include graphs.cpp
 
 int main() {
-  // carry out testing for all functions
+  // read in input from user
+
+  // for numtrials, creates an appropriate graph and sums weight
+
+  //
 
   return 0;
 }
@@ -30,10 +34,10 @@ void kruskal (vector<>& e, set<int>& v, int n, set<>& x) {
   while (i < n - 1){
     if find(e[i][0]) != find(e[i][1]){
       x.add(e[i]);
-      union(e[i][0], e[i][1])
-    }
+      combine(e[i][0], e[i][1])
 
-    i++;
+      i++;
+    }
   }
 
   return;

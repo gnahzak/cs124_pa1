@@ -13,7 +13,7 @@ class Graph {
 		void initGraph(int n, int dim);
 		void makeSet(Vertex x);
 		Vertex find(Vertex x);
-		void union(Vertex x, Vertex y);
+		void combine(Vertex x, Vertex y);
 		void link(Vertex x, Vertex y);
 
 	void initGraph(int n, int dim) {
@@ -56,7 +56,7 @@ class Graph {
 		return *x.parent;
 	}
 
-	void union(Vertex x, Vertex y) {
+	void combine(Vertex x, Vertex y) {
 		link(find(Vertex x),find(Vertex y));
 	}
 
