@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
 
   // read in input from user
   if (argc != 5) {
-    std::cout << "Failure: incorrect number of arguments";
+    std::cout << "Failure: incorrect number of arguments\n";
     return 1;
   }
 
@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
   int numpoints = std::atoi(argv[2]);
   int numtrials = std::atoi(argv[3]);
   if (numpoints < 0 || numtrials <= 0){
-    std::cout << "Failure: number of points and trials must be positive";
+    std::cout << "Failure: number of points and trials must be positive\n";
     return 2;
   }
 
@@ -31,13 +31,15 @@ int main(int argc, char *argv[]) {
   // if dimension isn't 0, 2, 3, or 4, return an error
   int dim = std::atoi(argv[4]);
   if (dim < 0 || dim > 4 || dim == 1){
-    std::cout << "Dimension must be 0, 2, 3, or 4";
+    std::cout << "Dimension must be 0, 2, 3, or 4\n";
     return 3;
   }
 
   // for numtrials, creates an appropriate graph and sums weight
   float avg = 0.;
   for (int i = 0; i < numtrials; i++){
+    std::cout << "Trial " << i << "\n";
+    std::cout << "Creating graph\n";
     Graph g = Graph(numpoints, dim);
     avg += kruskal(g, numpoints);
   }
@@ -58,7 +60,9 @@ float kruskal (Graph& g, int n) {
   float weight = 0.;
 
   // sort edges in e
+  std::cout << "sorting\n";
   std::sort(g.edges.begin(), g.edges.end(), compareEdges);
+  std::cout << "sortingcomplete\n";
 
   // make sets for all vertices
   // for (int w=0; w < g.vertices.size(); ++w){
@@ -71,11 +75,12 @@ float kruskal (Graph& g, int n) {
   int mstedges = 0;
   int i = 0;
   while (mstedges < n - 1){
+    //std::cout << "Edge " << i << "\n";
     if (g.find(g.edges[i].u.index) != g.find(g.edges[i].v.index)){
       weight += g.edges[i].length;
       g.combine(g.edges[i].u.index, g.edges[i].v.index);
       mstedges++;
-      std::cout << g.edges[i].u.index << " " << g.edges[i].v.index << std::endl;
+      //std::cout << g.edges[i].u.index << " " << g.edges[i].v.index << std::endl;
     }
     i++;
   }

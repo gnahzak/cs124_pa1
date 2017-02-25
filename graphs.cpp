@@ -10,6 +10,7 @@ Graph::Graph(int n, int dim) {
 
 	if (dim == 0) {
 		for (int i=0; i<n; ++i) {
+			//std::cout << "Adding vertex " << i << "\n";
 			Vertex v;
 			v.dim = dim;
 			v.index = i;
@@ -17,6 +18,7 @@ Graph::Graph(int n, int dim) {
 			v.rank = 0;
 			vertices.push_back(v);
 			for (int j=0; j<i; j++) {
+				//std::cout << "Creating edge " << i << " -> " << j << "\n";
 				Vertex u = vertices[j];
 				Edge e;
 				e.u = u;
@@ -29,6 +31,7 @@ Graph::Graph(int n, int dim) {
 
 	else {
 		for (int i=0; i<n; ++i) {
+			//std::cout << "Adding vertex " << i << "\n";
 			Vertex v;
 			v.dim = dim;
 			v.index = i;
@@ -39,6 +42,7 @@ Graph::Graph(int n, int dim) {
 			}
 
 			for (int k=0; k < i; ++k) {
+				//std::cout << "Creating edge " << i << " -> " << k << "\n";
 				Vertex u = vertices[k];
 				float sqsum = 0;
 				for (int d=0; d<dim; ++d) {
