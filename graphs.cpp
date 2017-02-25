@@ -37,8 +37,8 @@ Graph::Graph(int n, int dim) {
 
 		std::cout << "here9";
 
-		for (int j=0; j < vertices.size(); ++j) {
-			Vertex u = vertices[j];
+		for (int k=0; k < vertices.size(); ++k) {
+			Vertex u = vertices[k];
 			float sqsum = 0;
 			for (int d=0; d<dim; ++d) {
 				sqsum += pow((v.coords[d] - u.coords[d]),2);
