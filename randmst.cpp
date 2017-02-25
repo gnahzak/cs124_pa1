@@ -74,6 +74,8 @@ float kruskal (Graph& g, int n) {
       weight += g.edges[i].length;
       g.combine(g.edges[i].u, g.edges[i].v);
 
+      std::cout << g.edges[i].u.index << " " << g.edges[i].v.index << std::endl;
+
       i++;
     }
   }
