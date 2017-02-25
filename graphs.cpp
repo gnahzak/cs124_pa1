@@ -9,25 +9,25 @@ Graph::Graph(int n, int dim) {
 
 	if (dim == 0) {
 		for (int i=0; i<n; ++i) {
-			Vertex* v = malloc(sizeof(Vertex));
+			Vertex* v = (Vertex*)malloc(sizeof(Vertex));
 			v->dim = dim;
-			v->coords.insert((float)i);
+			v->coords.push_back((float)i);
 			for (int j=0; j<n; j++) {
 				Vertex* u = &vertices[j];
-				Edge* e = malloc(sizeof(Edge));
+				Edge* e = (Edge*)malloc(sizeof(Edge));
 				e->u = *u;
 				e->v = *v;
 				e->length = static_cast <float> (rand());
-				edges.insert(*e);
+				edges.push_back(*e);
 			}
 		}
 	}
 
 	for (int i=0; i<n; ++i) {
-		Vertex* v = malloc(sizeof(Vertex));
+		Vertex* v = (Vertex*)malloc(sizeof(Vertex));
 		v->dim = dim;
 		for (int j=0; j<dim; ++j) {
-			v->coords.insert(static_cast <float> (rand()) / static_cast <float> (RAND_MAX));
+			v->coords.push_back(static_cast <float> (rand()) / static_cast <float> (RAND_MAX));
 		}
 
 		for (int j=0; j < vertices.size(); ++j) {
@@ -36,14 +36,14 @@ Graph::Graph(int n, int dim) {
 			for (int d=0; d<dim; ++d) {
 				sqsum += pow((v->coords[d] - u->coords[d]),2);
 			}
-			Edge* e = malloc(sizeof(Edge));
+			Edge* e = (Edge*)malloc(sizeof(Edge));
 			e->u = *u;
 			e->v = *v;
 			e->length = sqrt(sqsum);
-			edges.insert(*e)
+			edges.push_back(*e);
 		}
 
-		vertices.insert(*v);
+		vertices.push_back(*v);
 	}
 }
 
@@ -53,14 +53,14 @@ void Graph::makeSet(Vertex x) {
 }
 
 Vertex* Graph::find(Vertex x) {
-	if (x != x.parent) {
+	if (&x != x.parent) {
 		x.parent = find(*x.parent);
 	}
-	return *x.parent;
+	return x.parent;
 }
 
 void Graph::combine(Vertex x, Vertex y) {
-	link(find(Vertex x),find(Vertex y));
+	link(*find(x),*find(y));
 }
 
 void Graph::link(Vertex x, Vertex y) {
@@ -72,6 +72,6 @@ void Graph::link(Vertex x, Vertex y) {
 		y.rank++;
 	}
 	x.parent = &y;
-	return y;
+	//return y;
 }
 
