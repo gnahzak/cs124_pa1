@@ -31,6 +31,5 @@ class Graph {
     int find(int x);
     void combine(int x, int y);
     void link(int a, int b);
-    bool compareEdges (Edge& e1, Edge& e2);
 };
 

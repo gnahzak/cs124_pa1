@@ -26,6 +26,7 @@ Graph::Graph(int n, int dim) {
 				e.length = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 				edges.push_back(e);
 			}
+
 		}
 	}
 
@@ -99,4 +100,5 @@ void Graph::link(int a, int b) {
 	//std::cout << vertices[a].index << " " << vertices[a].parent << " " << vertices[b].parent << std::endl;
 	//return b;
 }
+
 
