@@ -75,12 +75,10 @@ float kruskal (Graph& g, int n) {
   int mstedges = 0;
   int i = 0;
   while (mstedges < n - 1){
-    //std::cout << "Edge " << i << "\n";
     if (g.find(g.edges[i].u.index) != g.find(g.edges[i].v.index)){
       weight += g.edges[i].length;
       g.combine(g.edges[i].u.index, g.edges[i].v.index);
       mstedges++;
-      //std::cout << g.edges[i].u.index << " " << g.edges[i].v.index << std::endl;
     }
     i++;
   }
@@ -91,12 +89,3 @@ float kruskal (Graph& g, int n) {
 bool compareEdges (Edge e1, Edge e2) {
   return e1.length < e2.length;
 }
-// uses mergesort to sort the edges from least to greatest length
-// void sort(vector<>& edges){
-//   int half1size = edges.size()/2;
-//   int half2size = edges.size()-half1size;
-
-//   if (half1size == 2) {
-
-//   }
-// }
