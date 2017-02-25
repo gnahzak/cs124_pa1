@@ -3,6 +3,9 @@
 #include "graphs.h"
 #include <iostream>
 
+bool compareEdges(Edge e1, Edge e2);
+float kruskal (Graph& g, int n);
+
 int main(int argc, char *argv[]) {
 
   // read in input from user
@@ -12,8 +15,8 @@ int main(int argc, char *argv[]) {
   }
 
   // check for nonnegative numpoints and positive numtrials
-  int numpoints = argv[2] - '0';
-  int numtrials = argv[3] - '0';
+  int numpoints = std::atoi(argv[2]);
+  int numtrials = std::atoi(argv[3]);
   if (numpoints < 0 || numtrials <= 0){
     std::cout << "Failure: number of points and trials must be positive";
     return 2;
@@ -25,7 +28,7 @@ int main(int argc, char *argv[]) {
   }
 
   // if dimension isn't 0, 2, 3, or 4, return an error
-  int dim = argv[4];
+  int dim = std::atoi(argv[4]);
   if (dim < 0 || dim > 4 || dim == 1){
     std::cout << "Dimension must be 0, 2, 3, or 4";
     return 3;
@@ -35,12 +38,12 @@ int main(int argc, char *argv[]) {
   float avg = 0.;
   for (int i = 0; i < numtrials; i++){
     Graph g = Graph(numpoints, dim);
-    avg += kruskal(g.edges, g.vertices, numpoints);
+    avg += kruskal(g, numpoints);
   }
-  avg /= numtrials
+  avg /= numtrials;
 
   // return output
-  std::cout << avg << " " << numpoints << " " << numtrials << " " << dim << endl;
+  std::cout << avg << " " << numpoints << " " << numtrials << " " << dim << std::endl;
   return 0;
 }
 
@@ -49,16 +52,16 @@ int main(int argc, char *argv[]) {
 // nodes in the graph, and an empty set
 // adds the edges in the MST to the empty set
 
-float kruskal (std::vector<Edge>& e, std::vector<Vertex>& v, int n) {
+float kruskal (Graph& g, int n) {
 
   float weight = 0.;
 
   // sort edges in e
-  std::sort(e.begin(), e.end(), compareEdges);
+  std::sort(g.edges.begin(), g.edges.end(), compareEdges);
 
   // make sets for all vertices
-  for (Vertex w : vertices){
-    makeSet(w);
+  for (Vertex w : g.vertices){
+    g.makeSet(w);
   }
 
   // iterate through edges in increasing order until n-1 edges
@@ -66,9 +69,9 @@ float kruskal (std::vector<Edge>& e, std::vector<Vertex>& v, int n) {
   // simultaneously, add the weight of the edge to the MST
   int i = 0;
   while (i < n - 1){
-    if (find(e[i][0]) != find(e[i][1])){
-      weight += e[i].length;
-      combine(e[i].u, e[i].v);
+    if (g.find(g.edges[i].u) != g.find(g.edges[i].v)){
+      weight += g.edges[i].length;
+      g.combine(g.edges[i].u, g.edges[i].v);
 
       i++;
     }
@@ -77,11 +80,9 @@ float kruskal (std::vector<Edge>& e, std::vector<Vertex>& v, int n) {
   return weight;
 }
 
-
 bool compareEdges (Edge e1, Edge e2) {
   return e1.length < e2.length;
 }
-
 // uses mergesort to sort the edges from least to greatest length
 // void sort(vector<>& edges){
 //   int half1size = edges.size()/2;

@@ -3,7 +3,7 @@
 
 class Graph {
 
-	void Graph(int n, int dim) {
+	Graph(int n, int dim) {
 		this->n = n;
 		this->dim = dim;
 
@@ -36,7 +36,7 @@ class Graph {
 		x.rank = 0;
 	}
 
-	Vertex find(Vertex x) {
+	Vertex* find(Vertex x) {
 		if (x != x.parent) {
 			x.parent = find(*x.parent);
 		}
@@ -58,5 +58,6 @@ class Graph {
 		x.parent = &y;
 		return y;
 	}
+
 };
 

@@ -4,7 +4,7 @@
 #include <time.h>
 #include <math.h>
 
-struct Vertex {
+typedef struct Vertex {
   int dim;
   std::vector<float> coords;
   Vertex* parent;
@@ -12,23 +12,24 @@ struct Vertex {
 } Vertex;
 
 //implement comparable
-struct Edge {
+typedef struct Edge {
   struct Vertex u;
   struct Vertex v;
   float length;
-};
+} Edge;
 
 class Graph {
 
   public:
     int n, dim;
-    std::vector<struct Vertex> vertices;
-    std::vector<struct Edge> edges;
+    std::vector<Vertex> vertices;
+    std::vector<Edge> edges;
 
-    void initGraph(int n, int dim);
-    void makeSet(struct Vertex x);
-    struct Vertex find(struct Vertex x);
-    void combine(struct Vertex x, struct Vertex y);
-    void link(struct Vertex x, struct Vertex y);
+    Graph(int n, int dim);
+    void makeSet(Vertex x);
+    Vertex* find(Vertex x);
+    void combine(Vertex x, Vertex y);
+    void link(Vertex x, Vertex y);
+    bool compareEdges (Edge e1, Edge e2);
 };
 
