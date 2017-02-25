@@ -15,13 +15,13 @@ Graph::Graph(int n, int dim) {
 			v.index = i;
 			v.parent = i;
 			v.rank = 0;
-			v.coords.push_back((float)i);
-			for (int j=0; j<n; j++) {
+			vertices.push_back(v);
+			for (int j=0; j<i; j++) {
 				Vertex u = vertices[j];
 				Edge e;
 				e.u = u;
 				e.v = v;
-				e.length = static_cast <float> (rand());
+				e.length = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 				edges.push_back(e);
 			}
 		}
