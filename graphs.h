@@ -26,10 +26,10 @@ class Graph {
     std::vector<Edge> edges;
 
     Graph(int n, int dim);
-    void makeSet(Vertex x);
-    Vertex* find(Vertex x);
-    void combine(Vertex x, Vertex y);
-    void link(Vertex x, Vertex y);
-    bool compareEdges (Edge e1, Edge e2);
+    void makeSet(Vertex& x);
+    Vertex* find(Vertex& x);
+    void combine(Vertex& x, Vertex& y);
+    void link(Vertex& x, Vertex& y);
+    bool compareEdges (Edge& e1, Edge& e2);
 };
 

@@ -37,7 +37,7 @@ Graph::Graph(int n, int dim) {
 
 		std::cout << "here9";
 
-		for (int k=0; k < vertices.size(); ++k) {
+		for (int k=0; k < i; ++k) {
 			Vertex u = vertices[k];
 			float sqsum = 0;
 			for (int d=0; d<dim; ++d) {
@@ -54,29 +54,29 @@ Graph::Graph(int n, int dim) {
 
 		vertices.push_back(v);
 
-		std::cout << "here11\n";
+		std::cout << "here11" << i << std::endl;
 	}
 
-	std::cout << "here12";
+	std::cout << "here12" << std::endl;
 }
 
-void Graph::makeSet(Vertex x) {
+void Graph::makeSet(Vertex& x) {
 	x.parent = &x;
 	x.rank = 0;
 }
 
-Vertex* Graph::find(Vertex x) {
+Vertex* Graph::find(Vertex& x) {
 	if (&x != x.parent) {
 		x.parent = find(*x.parent);
 	}
 	return x.parent;
 }
 
-void Graph::combine(Vertex x, Vertex y) {
+void Graph::combine(Vertex& x, Vertex& y) {
 	link(*find(x),*find(y));
 }
 
-void Graph::link(Vertex x, Vertex y) {
+void Graph::link(Vertex& x, Vertex& y) {
 	if (x.rank > y.rank) {
 		Vertex tmp = x;
 		x = y;

@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
   for (int i = 0; i < numtrials; i++){
     Graph g = Graph(numpoints, dim);
 
-    std::cout << "here6";
+    std::cout << "here!" << std::endl;
 
     avg += kruskal(g, numpoints);
   }
@@ -67,8 +67,6 @@ int main(int argc, char *argv[]) {
 // adds the edges in the MST to the empty set
 
 float kruskal (Graph& g, int n) {
-
-  std::cout << "here";
 
   float weight = 0.;
 
