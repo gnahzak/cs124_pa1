@@ -9,6 +9,22 @@ class Graph {
 
 		srand(time(NULL));
 
+		if (dim == 0) {
+			for (int i=0; i<n; ++i) {
+				Vertex* v = malloc(sizeof(Vertex));
+				v->dim = dim;
+				v->coords.insert((float)i);
+				for (int j=0; j<n; j++) {
+					Vertex* u = &vertices[j];
+					Edge* e = malloc(sizeof(Edge));
+					e->u = *u;
+					e->v = *v;
+					e->length = static_cast <float> (rand());
+					edges.insert(*e);
+				}
+			}
+		}
+
 		for (int i=0; i<n; ++i) {
 			Vertex* v = malloc(sizeof(Vertex));
 			v->dim = dim;
@@ -17,7 +33,7 @@ class Graph {
 			}
 
 			for (int j=0; j < vertices.size(); ++j) {
-				Vertex* u = &vertices[i];
+				Vertex* u = &vertices[j];
 				float sqsum = 0;
 				for (int d=0; d<dim; ++d) {
 					sqsum += pow((v->coords[d] - u->coords[d]),2);
@@ -26,9 +42,10 @@ class Graph {
 				e->u = *u;
 				e->v = *v;
 				e->length = sqrt(sqsum);
+				edges.insert(*e)
 			}
 
-			vertices.insert(v);
+			vertices.insert(*v);
 		}
 	}
 
