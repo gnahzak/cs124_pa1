@@ -7,7 +7,8 @@
 typedef struct Vertex {
   int dim;
   std::vector<float> coords;
-  Vertex* parent;
+  int parent;
+  int index;
   int rank;
 } Vertex;
 
@@ -26,10 +27,10 @@ class Graph {
     std::vector<Edge> edges;
 
     Graph(int n, int dim);
-    void makeSet(Vertex& x);
-    Vertex* find(Vertex& x);
+//    void makeSet(Vertex& x);
+    int find(Vertex& x);
     void combine(Vertex& x, Vertex& y);
-    void link(Vertex& x, Vertex& y);
+    void link(Vertex& a, Vertex& b);
     bool compareEdges (Edge& e1, Edge& e2);
 };
 

@@ -8,12 +8,13 @@ Graph::Graph(int n, int dim) {
 
 	srand(time(NULL));
 
-	std::cout << "here7";
-
 	if (dim == 0) {
 		for (int i=0; i<n; ++i) {
 			Vertex v;
 			v.dim = dim;
+			v.index = i;
+			v.parent = i;
+			v.rank = 0;
 			v.coords.push_back((float)i);
 			for (int j=0; j<n; j++) {
 				Vertex u = vertices[j];
@@ -26,16 +27,15 @@ Graph::Graph(int n, int dim) {
 		}
 	}
 
-	std::cout << "here8\n";
-
 	for (int i=0; i<n; ++i) {
 		Vertex v;
 		v.dim = dim;
+		v.index = i;
+		v.parent = i;
+		v.rank = 0;
 		for (int j=0; j<dim; ++j) {
 			v.coords.push_back(static_cast <float> (rand()) / static_cast <float> (RAND_MAX));
 		}
-
-		std::cout << "here9";
 
 		for (int k=0; k < i; ++k) {
 			Vertex u = vertices[k];
@@ -50,41 +50,36 @@ Graph::Graph(int n, int dim) {
 			edges.push_back(e);
 		}
 
-		std::cout << "here10";
-
 		vertices.push_back(v);
-
-		std::cout << "here11" << i << std::endl;
 	}
-
-	std::cout << "here12" << std::endl;
 }
 
-void Graph::makeSet(Vertex& x) {
-	x.parent = &x;
-	x.rank = 0;
-}
+// void Graph::makeSet(Vertex& x) {
+// 	x.parent = &x;
+// 	std::cout << x.parent << " " << &x << std::endl;
+// 	x.rank = 0;
+// }
 
-Vertex* Graph::find(Vertex& x) {
-	if (&x != x.parent) {
-		x.parent = find(*x.parent);
+int Graph::find(Vertex& x) {
+	if (x.index != x.parent) {
+		x.parent = find(vertices[x.parent]);
 	}
-	return x.parent;
+	return x.index;
 }
 
 void Graph::combine(Vertex& x, Vertex& y) {
-	link(*find(x),*find(y));
+	link(vertices[find(x)], vertices[find(y)]);
 }
 
-void Graph::link(Vertex& x, Vertex& y) {
-	if (x.rank > y.rank) {
-		Vertex tmp = x;
-		x = y;
-		y = tmp;
-	}else if (x.rank == y.rank) {
-		y.rank++;
+void Graph::link(Vertex& a, Vertex& b) {
+	if (a.rank > b.rank) {
+		b.parent = a.parent;
+	}else {
+		if (a.rank == b.rank) {
+		b.rank++;
+		}
+		a.parent = b.parent;
 	}
-	x.parent = &y;
-	//return y;
+	//return b;
 }
 
