@@ -68,24 +68,29 @@ Graph::Graph(int n, int dim) {
 
 int Graph::find(Vertex& x) {
 	if (x.index != x.parent) {
+		std::cout << "NOOO";
 		x.parent = find(vertices[x.parent]);
 	}
 	return x.index;
 }
 
 void Graph::combine(Vertex& x, Vertex& y) {
-	link(vertices[find(x)], vertices[find(y)]);
+	std::cout << find(x) << " - " << find(y) << std::endl;
+	link(find(x), find(y));
 }
 
-void Graph::link(Vertex& a, Vertex& b) {
-	if (a.rank > b.rank) {
-		b.parent = a.parent;
-	}else {
-		if (a.rank == b.rank) {
-		b.rank++;
+void Graph::link(int a, int b) {
+	if (vertices[a].rank > vertices[b].rank) {
+		std::cout << vertices[a].parent << std::endl;
+		vertices[b].parent = vertices[a].parent;
+		std::cout << vertices[b].parent << "NOOO" << std::endl;
+	} else {
+		if (vertices[a].rank == vertices[b].rank) {
+		vertices[b].rank++;
 		}
-		a.parent = b.parent;
+		vertices[a].parent = vertices[b].parent;
 	}
+	std::cout << vertices[a].index << " " << vertices[a].parent << " " << vertices[b].parent << std::endl;
 	//return b;
 }
 
