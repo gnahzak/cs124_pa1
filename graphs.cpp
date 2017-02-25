@@ -1,20 +1,7 @@
 /* Creates different types of random graphs */
-#include <stdlib.h>
-#include <time.h>
-#include <math.h>
+#include "graphs.h"
 
 class Graph {
-
-	public:
-		int n, dim;
-		std::vector<Vertex> vertices;
-		std::vector<Edge> edges;
-
-		void initGraph(int n, int dim);
-		void makeSet(Vertex x);
-		Vertex find(Vertex x);
-		void combine(Vertex x, Vertex y);
-		void link(Vertex x, Vertex y);
 
 	void initGraph(int n, int dim) {
 		this->n = n;
@@ -73,16 +60,3 @@ class Graph {
 	}
 };
 
-struct Vertex {
-	int dim;
-	std::vector<float> coords;
-	Vertex* parent;
-	int rank;
-} Vertex;
-
-//implement comparable
-struct Edge {
-	Vertex u;
-	Vertex v;
-	float length;
-};
