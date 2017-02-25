@@ -1,5 +1,6 @@
 /* Creates different types of random graphs */
 #include "graphs.h"
+#include <iostream>
 
 Graph::Graph(int n, int dim) {
 	this->n = n;
@@ -7,44 +8,56 @@ Graph::Graph(int n, int dim) {
 
 	srand(time(NULL));
 
+	std::cout << "here7";
+
 	if (dim == 0) {
 		for (int i=0; i<n; ++i) {
-			Vertex* v = (Vertex*)malloc(sizeof(Vertex));
-			v->dim = dim;
-			v->coords.push_back((float)i);
+			Vertex v;
+			v.dim = dim;
+			v.coords.push_back((float)i);
 			for (int j=0; j<n; j++) {
-				Vertex* u = &vertices[j];
-				Edge* e = (Edge*)malloc(sizeof(Edge));
-				e->u = *u;
-				e->v = *v;
-				e->length = static_cast <float> (rand());
-				edges.push_back(*e);
+				Vertex u = vertices[j];
+				Edge e;
+				e.u = u;
+				e.v = v;
+				e.length = static_cast <float> (rand());
+				edges.push_back(e);
 			}
 		}
 	}
+
+	std::cout << "here8\n";
 
 	for (int i=0; i<n; ++i) {
-		Vertex* v = (Vertex*)malloc(sizeof(Vertex));
-		v->dim = dim;
+		Vertex v;
+		v.dim = dim;
 		for (int j=0; j<dim; ++j) {
-			v->coords.push_back(static_cast <float> (rand()) / static_cast <float> (RAND_MAX));
+			v.coords.push_back(static_cast <float> (rand()) / static_cast <float> (RAND_MAX));
 		}
+
+		std::cout << "here9";
 
 		for (int j=0; j < vertices.size(); ++j) {
-			Vertex* u = &vertices[j];
+			Vertex u = vertices[j];
 			float sqsum = 0;
 			for (int d=0; d<dim; ++d) {
-				sqsum += pow((v->coords[d] - u->coords[d]),2);
+				sqsum += pow((v.coords[d] - u.coords[d]),2);
 			}
-			Edge* e = (Edge*)malloc(sizeof(Edge));
-			e->u = *u;
-			e->v = *v;
-			e->length = sqrt(sqsum);
-			edges.push_back(*e);
+			Edge e;
+			e.u = u;
+			e.v = v;
+			e.length = sqrt(sqsum);
+			edges.push_back(e);
 		}
 
-		vertices.push_back(*v);
+		std::cout << "here10";
+
+		vertices.push_back(v);
+
+		std::cout << "here11\n";
 	}
+
+	std::cout << "here12";
 }
 
 void Graph::makeSet(Vertex x) {

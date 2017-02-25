@@ -8,11 +8,15 @@ float kruskal (Graph& g, int n);
 
 int main(int argc, char *argv[]) {
 
+  std::cout << "here";
+
   // read in input from user
   if (argc != 5) {
     std::cout << "Failure: incorrect number of arguments";
     return 1;
   }
+
+  std::cout << "here2";
 
   // check for nonnegative numpoints and positive numtrials
   int numpoints = std::atoi(argv[2]);
@@ -21,11 +25,16 @@ int main(int argc, char *argv[]) {
     std::cout << "Failure: number of points and trials must be positive";
     return 2;
   }
+
+  std::cout << "here3";
+
   // if numpoints is 1 or 0, return 0
 
   if (numpoints == 1 || numpoints == 0){
     return 0.0;
   }
+
+  std::cout << "here4";
 
   // if dimension isn't 0, 2, 3, or 4, return an error
   int dim = std::atoi(argv[4]);
@@ -34,10 +43,15 @@ int main(int argc, char *argv[]) {
     return 3;
   }
 
+  std::cout << "here5";
+
   // for numtrials, creates an appropriate graph and sums weight
   float avg = 0.;
   for (int i = 0; i < numtrials; i++){
     Graph g = Graph(numpoints, dim);
+
+    std::cout << "here6";
+
     avg += kruskal(g, numpoints);
   }
   avg /= numtrials;
@@ -53,6 +67,8 @@ int main(int argc, char *argv[]) {
 // adds the edges in the MST to the empty set
 
 float kruskal (Graph& g, int n) {
+
+  std::cout << "here";
 
   float weight = 0.;
 
