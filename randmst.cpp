@@ -68,16 +68,16 @@ float kruskal (Graph& g, int n) {
   // iterate through edges in increasing order until n-1 edges
   // have been added to the MST
   // simultaneously, add the weight of the edge to the MST
+  int mstedges = 0;
   int i = 0;
-  while (i < n - 1){
-    if (g.find(g.edges[i].u) != g.find(g.edges[i].v)){
+  while (mstedges < n - 1){
+    if (g.find(g.edges[i].u.index) != g.find(g.edges[i].v.index)){
       weight += g.edges[i].length;
       g.combine(g.edges[i].u.index, g.edges[i].v.index);
-
+      mstedges++;
       std::cout << g.edges[i].u.index << " " << g.edges[i].v.index << std::endl;
-
-      i++;
     }
+    i++;
   }
 
   return weight;
