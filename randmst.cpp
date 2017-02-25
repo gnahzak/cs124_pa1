@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
   // for numtrials, creates an appropriate graph and sums weight
   float avg = 0.;
   for (int i = 0; i < numtrials; i++){
-    g = Graph.initGraph(numpoints, dim);
+    Graph g = Graph(numpoints, dim);
     avg += kruskal(g.edges, g.vertices, numpoints);
   }
   avg /= numtrials
@@ -66,7 +66,7 @@ float kruskal (std::vector<Edge>& e, std::vector<Vertex>& v, int n) {
   // simultaneously, add the weight of the edge to the MST
   int i = 0;
   while (i < n - 1){
-    if find(e[i][0]) != find(e[i][1]){
+    if (find(e[i][0]) != find(e[i][1])){
       weight += e[i].length;
       combine(e[i].u, e[i].v);
 

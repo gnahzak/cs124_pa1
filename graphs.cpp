@@ -3,7 +3,7 @@
 
 class Graph {
 
-	void initGraph(int n, int dim) {
+	void Graph(int n, int dim) {
 		this->n = n;
 		this->dim = dim;
 
