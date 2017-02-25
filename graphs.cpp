@@ -16,14 +16,15 @@ class Graph {
 				v->coords.insert(static_cast <float> (rand()) / static_cast <float> (RAND_MAX));
 			}
 
-			for (Vertex u : vertices) {
+			for (int j=0; j < vertices.size(); ++j) {
+				Vertex* u = &vertices[i];
 				float sqsum = 0;
 				for (int d=0; d<dim; ++d) {
-					sqsum += pow((v[d] - u[d]),2);
+					sqsum += pow((v->coords[d] - u->coords[d]),2);
 				}
 				Edge* e = malloc(sizeof(Edge));
-				e->u = u;
-				e->v = v;
+				e->u = *u;
+				e->v = *v;
 				e->length = sqrt(sqsum);
 			}
 
