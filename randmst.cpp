@@ -72,7 +72,7 @@ float kruskal (Graph& g, int n) {
   while (i < n - 1){
     if (g.find(g.edges[i].u) != g.find(g.edges[i].v)){
       weight += g.edges[i].length;
-      g.combine(g.edges[i].u, g.edges[i].v);
+      g.combine(g.edges[i].u.index, g.edges[i].v.index);
 
       std::cout << g.edges[i].u.index << " " << g.edges[i].v.index << std::endl;
 

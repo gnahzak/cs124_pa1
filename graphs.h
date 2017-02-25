@@ -29,7 +29,7 @@ class Graph {
     Graph(int n, int dim);
 //    void makeSet(Vertex& x);
     int find(Vertex& x);
-    void combine(Vertex& x, Vertex& y);
+    void combine(int x, int y);
     void link(int a, int b);
     bool compareEdges (Edge& e1, Edge& e2);
 };

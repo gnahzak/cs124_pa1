@@ -74,9 +74,9 @@ int Graph::find(Vertex& x) {
 	return x.index;
 }
 
-void Graph::combine(Vertex& x, Vertex& y) {
-	std::cout << find(x) << " - " << find(y) << std::endl;
-	link(find(x), find(y));
+void Graph::combine(int x, int y) {
+	std::cout << find(vertices[x]) << " - " << find(vertices[y]) << std::endl;
+	link(find(vertices[x]), find(vertices[y]));
 }
 
 void Graph::link(int a, int b) {
