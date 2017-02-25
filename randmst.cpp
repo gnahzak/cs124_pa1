@@ -60,8 +60,8 @@ float kruskal (Graph& g, int n) {
   std::sort(g.edges.begin(), g.edges.end(), compareEdges);
 
   // make sets for all vertices
-  for (int w=0; w < vertices.size(); ++w){
-    g.makeSet(vertices[w]);
+  for (int w=0; w < g.vertices.size(); ++w){
+    g.makeSet(g.vertices[w]);
   }
 
   // iterate through edges in increasing order until n-1 edges
