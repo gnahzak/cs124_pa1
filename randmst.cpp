@@ -9,7 +9,7 @@ float kruskal (Graph& g, int n);
 int main(int argc, char *argv[]) {
 
   // read in input from user
-  if (argc != 4) {
+  if (argc != 5) {
     std::cout << "Failure: incorrect number of arguments";
     return 1;
   }
