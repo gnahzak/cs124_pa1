@@ -4,7 +4,7 @@ RM=rm -f
 CPPFLAGS=-g -O3
 LDFLAGS=-g -O3
 
-SRCS=randmst.cpp graphs.cpp
+SRCS=randmst.cpp graphs.cpp binaryheap.cpp
 OBJS=$(subst .cpp,.o,$(SRCS))
 
 all: randmst

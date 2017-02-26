@@ -4,20 +4,19 @@
 #include <time.h>
 #include <math.h>
 
+//implement comparable
+typedef struct Edge {
+  int u;
+  int v;
+  float length;
+} Edge;
+
 typedef struct Vertex {
   int dim;
   std::vector<float> coords;
-  int parent;
+  std::vector<Edge> v_edges;
   int index;
-  int rank;
 } Vertex;
-
-//implement comparable
-typedef struct Edge {
-  struct Vertex u;
-  struct Vertex v;
-  float length;
-} Edge;
 
 class Graph {
 
@@ -27,9 +26,5 @@ class Graph {
     std::vector<Edge> edges;
 
     Graph(int n, int dim);
-//    void makeSet(Vertex& x);
-    int find(int x);
-    void combine(int x, int y);
-    void link(int a, int b);
 };
 

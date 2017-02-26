@@ -14,16 +14,16 @@ Graph::Graph(int n, int dim) {
 			v.dim = dim;
 			v.index = i;
 			//`makeSet`
-			v.parent = i;
-			v.rank = 0;
 			vertices.push_back(v);
 			for (int j=0; j<i; j++) {
 				Vertex u = vertices[j];
 				Edge e;
-				e.u = u;
-				e.v = v;
+				e.u = u.index;
+				e.v = v.index;
 				e.length = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
 				edges.push_back(e);
+				vertices[e.u].v_edges.push_back(e);
+				v.v_edges.push_back(e);
 			}
 
 		}
@@ -35,8 +35,6 @@ Graph::Graph(int n, int dim) {
 			v.dim = dim;
 			v.index = i;
 			//`makeSet`
-			v.parent = i;
-			v.rank = 0;
 			for (int j=0; j<dim; ++j) {
 				v.coords.push_back(static_cast <float> (rand()) / static_cast <float> (RAND_MAX));
 			}
@@ -48,42 +46,19 @@ Graph::Graph(int n, int dim) {
 					sqsum += pow((v.coords[d] - u.coords[d]),2);
 				}
 				Edge e;
-				e.u = u;
-				e.v = v;
+				e.u = u.index;
+				e.v = v.index;
 				e.length = sqrt(sqsum);
 				edges.push_back(e);
+				vertices[e.u].v_edges.push_back(e);
+				v.v_edges.push_back(e);
+
+				//std::cout << e.u << " " << e.v << " " << e.length << std::endl;
 			}
 
 			vertices.push_back(v);
 		}
-	}
-}
-
-// void Graph::makeSet(Vertex& x) {
-// 	x.parent = &x;
-// 	std::cout << x.parent << " " << &x << std::endl;
-// 	x.rank = 0;
-// }
-
-int Graph::find(int x) {
-	if (x != vertices[x].parent) {
-		vertices[x].parent = find(vertices[x].parent);
-	}
-	return vertices[x].parent;
-}
-
-void Graph::combine(int x, int y) {
-	link(find(x), find(y));
-}
-
-void Graph::link(int a, int b) {
-	if (vertices[a].rank > vertices[b].rank) {
-		vertices[b].parent = a;
-	} else {
-		if (vertices[a].rank == vertices[b].rank) {
-			vertices[b].rank++;
-		}
-		vertices[a].parent = b;
+		//std::cout << std::endl;
 	}
 }
 

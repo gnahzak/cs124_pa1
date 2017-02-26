@@ -1,10 +1,11 @@
 /* Tests the MST algorithm on different types of graphs */
 
 #include "graphs.h"
+#include "binaryheap.h"
 #include <iostream>
 
 bool compareEdges(Edge e1, Edge e2);
-float kruskal (Graph& g, int n);
+float prim (Graph& g, int n);
 
 float maxWeight = 0;
 
@@ -43,13 +44,13 @@ int main(int argc, char *argv[]) {
     //std::cout << "Trial " << i << ": ";
     //std::cout << "Creating graph\n";
     Graph g = Graph(numpoints, dim);
-    avg += kruskal(g, numpoints);
+    avg += prim(g, numpoints);
     sleep(1); //to properly reseed random number generator
   }
   avg /= numtrials;
 
   // return output
-  std::cout << "max edge weight: " << maxWeight << std::endl;
+  //std::cout << "max edge weight: " << maxWeight << std::endl;
   std::cout << avg << " " << numpoints << " " << numtrials << " " << dim << std::endl;
   return 0;
 }
@@ -59,36 +60,58 @@ int main(int argc, char *argv[]) {
 // nodes in the graph, and an empty set
 // adds the edges in the MST to the empty set
 
-float kruskal (Graph& g, int n) {
-
+float prim (Graph& g, int n) {
   float weight = 0.;
 
-  // sort edges in e
-  //std::cout << "sorting\n";
-  std::sort(g.edges.begin(), g.edges.end(), compareEdges);
-  //std::cout << "sortingcomplete\n";
+  float dist[n];
+  bool inMST[n];
+  int prev[n];
 
-  // make sets for all vertices
-  // for (int w=0; w < g.vertices.size(); ++w){
-  //   g.makeSet(g.vertices[w]);
-  // }
-
-  // iterate through edges in increasing order until n-1 edges
-  // have been added to the MST
-  // simultaneously, add the weight of the edge to the MST
-  int mstedges = 0;
-  int i = 0;
-  
-  while (mstedges < n - 1){
-    if (g.find(g.edges[i].u.index) != g.find(g.edges[i].v.index)){
-      weight += g.edges[i].length;
-      g.combine(g.edges[i].u.index, g.edges[i].v.index);
-      mstedges++;
-      if (g.edges[i].length > maxWeight) maxWeight = g.edges[i].length;
-    }
-    i++;
+  for (int i=0; i<n; ++i) {
+    dist[i] = std::numeric_limits<float>::max();
+    inMST[i] = false;
+    prev[i] = -1;
   }
 
+
+  BinaryHeap H = BinaryHeap(n);
+  H.Insert(0,0);
+  //vertex 0 as source
+  dist[0] = 0;
+  inMST[0] = true;
+  prev[0] = 0;
+
+
+  while (H.size > 0) {
+    HeapElement he = H.DeleteMin();
+    // std::cout << "delete\n";
+    // for (int i=0; i<H.heapValues.size(); ++i) {
+    //   std::cout << H.heapValues[i].vindex << " ";
+    // }
+    // std::cout << std::endl;
+    weight += he.dist;
+    //std::cout << he.vindex << " " << prev[he.vindex] << " " << weight << std::endl;
+    Vertex v = g.vertices[he.vindex];
+    inMST[v.index] = true;
+    for (int i=0; i<v.v_edges.size(); ++i) {
+      Edge e = v.v_edges[i];
+      Vertex w = g.vertices[e.u];
+      if (w.index == v.index) {
+        w = g.vertices[e.v];
+      }
+      if (!inMST[w.index] && (dist[w.index] > e.length)) {
+        //std::cout << w.index << " " << inMST[w.index];
+        dist[w.index] = e.length;
+        prev[w.index] = v.index;
+        H.Insert(w.index,e.length);
+      }
+      // for (int i=0; i<H.heapValues.size(); ++i) {
+      //   std::cout << H.heapValues[i].vindex << " ";
+      // }
+      // std::cout << std::endl;
+    }
+  }
+  weight /= n;
   return weight;
 }
 
