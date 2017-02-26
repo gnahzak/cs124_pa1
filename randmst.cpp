@@ -44,6 +44,7 @@ int main(int argc, char *argv[]) {
     //std::cout << "Trial " << i << ": ";
     //std::cout << "Creating graph\n";
     Graph g = Graph(numpoints, dim);
+    std::cout << "Completed Graph Creation\n";
     avg += prim(g, numpoints);
     sleep(1); //to properly reseed random number generator
   }
@@ -93,22 +94,43 @@ float prim (Graph& g, int n) {
     //std::cout << he.vindex << " " << prev[he.vindex] << " " << weight << std::endl;
     Vertex v = g.vertices[he.vindex];
     inMST[v.index] = true;
-    for (int i=0; i<v.v_edges.size(); ++i) {
-      Edge e = v.v_edges[i];
-      Vertex w = g.vertices[e.u];
-      if (w.index == v.index) {
-        w = g.vertices[e.v];
+
+    if (g.dim > 0) {
+      for (int i=0; i<n; ++i) {
+        Vertex w = g.vertices[i];
+        if (w.index != v.index) {
+          if (!inMST[w.index]) {
+            float elength = 0;
+            for (int d=0; d<g.dim; ++d) {
+              elength += pow((w.coords[d] - v.coords[d]),2);
+            }
+            elength = sqrt(elength);
+            if (dist[w.index] > elength) {
+              dist[w.index] = elength;
+              prev[w.index] = v.index;
+              H.Insert(w.index,elength);
+            }
+          }
+        }
       }
-      if (!inMST[w.index] && (dist[w.index] > e.length)) {
-        //std::cout << w.index << " " << inMST[w.index];
-        dist[w.index] = e.length;
-        prev[w.index] = v.index;
-        H.Insert(w.index,e.length);
+    } else {
+      for (int i=0; i<v.v_edges.size(); ++i) {
+        Edge e = v.v_edges[i];
+        Vertex w = g.vertices[e.u];
+        if (w.index == v.index) {
+          w = g.vertices[e.v];
+        }
+        if (!inMST[w.index] && (dist[w.index] > e.length)) {
+          //std::cout << w.index << " " << inMST[w.index];
+          dist[w.index] = e.length;
+          prev[w.index] = v.index;
+          H.Insert(w.index,e.length);
+        }
+        // for (int i=0; i<H.heapValues.size(); ++i) {
+        //   std::cout << H.heapValues[i].vindex << " ";
+        // }
+        // std::cout << std::endl;
       }
-      // for (int i=0; i<H.heapValues.size(); ++i) {
-      //   std::cout << H.heapValues[i].vindex << " ";
-      // }
-      // std::cout << std::endl;
     }
   }
   weight /= n;

@@ -1,45 +1,5 @@
-./randmst 0 128 7 0
-0.055675 128 7 0
-./randmst 0 128 7 1
+./randmst 0 8192 5 0
+0.00324127 8192 5 0
+./randmst 0 8192 5 1
 Dimension must be 0, 2, 3, or 4
-./randmst 0 128 7 2
-0.0646874 128 7 2
-./randmst 0 128 7 3
-0.146925 128 7 3
-./randmst 0 128 7 4
-0.235583 128 7 4
-./randmst 0 256 7 0
-0.0375792 256 7 0
-./randmst 0 256 7 1
-Dimension must be 0, 2, 3, or 4
-./randmst 0 256 7 2
-0.045596 256 7 2
-./randmst 0 256 7 3
-0.115008 256 7 3
-./randmst 0 256 7 4
-0.195624 256 7 4
-./randmst 0 512 7 0
-0.0229869 512 7 0
-./randmst 0 512 7 1
-Dimension must be 0, 2, 3, or 4
-./randmst 0 512 7 2
-0.0324662 512 7 2
-./randmst 0 512 7 3
-0.090921 512 7 3
-./randmst 0 512 7 4
-0.161069 512 7 4
-./randmst 0 1024 7 0
-0.0140352 1024 7 0
-./randmst 0 1024 7 1
-Dimension must be 0, 2, 3, or 4
-./randmst 0 1024 7 2
-0.0228966 1024 7 2
-./randmst 0 1024 7 3
-0.0723637 1024 7 3
-./randmst 0 1024 7 4
-0.135829 1024 7 4
-./randmst 0 2048 7 0
-0.00904086 2048 7 0
-./randmst 0 2048 7 1
-Dimension must be 0, 2, 3, or 4
-./randmst 0 2048 7 2
+./randmst 0 8192 5 2

@@ -31,6 +31,7 @@ Graph::Graph(int n, int dim) {
 
 	else {
 		for (int i=0; i<n; ++i) {
+			//std::cout << "Vertex " << i << "\n";
 			Vertex v;
 			v.dim = dim;
 			v.index = i;
@@ -39,22 +40,22 @@ Graph::Graph(int n, int dim) {
 				v.coords.push_back(static_cast <float> (rand()) / static_cast <float> (RAND_MAX));
 			}
 
-			for (int k=0; k < i; ++k) {
-				Vertex u = vertices[k];
-				float sqsum = 0;
-				for (int d=0; d<dim; ++d) {
-					sqsum += pow((v.coords[d] - u.coords[d]),2);
-				}
-				Edge e;
-				e.u = u.index;
-				e.v = v.index;
-				e.length = sqrt(sqsum);
-				edges.push_back(e);
-				vertices[e.u].v_edges.push_back(e);
-				v.v_edges.push_back(e);
+			// for (int k=0; k < i; ++k) {
+			// 	Vertex u = vertices[k];
+			// 	float sqsum = 0;
+			// 	for (int d=0; d<dim; ++d) {
+			// 		sqsum += pow((v.coords[d] - u.coords[d]),2);
+			// 	}
+			// 	Edge e;
+			// 	e.u = u.index;
+			// 	e.v = v.index;
+			// 	e.length = sqrt(sqsum);
+			// 	edges.push_back(e);
+			// 	vertices[e.u].v_edges.push_back(e);
+			// 	v.v_edges.push_back(e);
 
-				//std::cout << e.u << " " << e.v << " " << e.length << std::endl;
-			}
+			// 	//std::cout << e.u << " " << e.v << " " << e.length << std::endl;
+			// }
 
 			vertices.push_back(v);
 		}
