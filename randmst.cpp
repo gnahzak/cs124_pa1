@@ -41,8 +41,7 @@ int main(int argc, char *argv[]) {
   // for numtrials, creates an appropriate graph and sums weight
   float avg = 0.;
   for (int i = 0; i < numtrials; i++){
-    //std::cout << "Trial " << i << ": ";
-    //std::cout << "Creating graph\n";
+    std::cout << "Trial " << i << ": \n";
     Graph g = Graph(numpoints, dim);
     std::cout << "Completed Graph Creation\n";
     avg += prim(g, numpoints);
@@ -51,7 +50,6 @@ int main(int argc, char *argv[]) {
   avg /= numtrials;
 
   // return output
-  //std::cout << "max edge weight: " << maxWeight << std::endl;
   std::cout << avg << " " << numpoints << " " << numtrials << " " << dim << std::endl;
   return 0;
 }
@@ -75,6 +73,7 @@ float prim (Graph& g, int n) {
   }
 
 
+  //initialize binary heap with source
   BinaryHeap H = BinaryHeap(n);
   H.Insert(0,0);
   //vertex 0 as source
@@ -82,31 +81,10 @@ float prim (Graph& g, int n) {
   inMST[0] = true;
   prev[0] = 0;
 
-  // for (int i=0; i<n; i++) {
-  //   Vertex v = g.vertices[i];
-  //   for (int j=i+1; j<n; j++) {
-  //     Vertex w = g.vertices[j];
-  //     float elength = 0;
-  //     for (int d=0; d<g.dim; ++d) {
-  //       elength += pow((w.coords[d] - v.coords[d]),2);
-  //     }
-  //     elength = sqrt(elength);
-  //     std::cout << i << " " << j << " " << elength << std::endl;
-  //   }
-  // }
-  // std::cout << std::endl;
-
-
   while (H.size > 0) {
+    //select the vertex not in the MST with the smallest connecting edge distance and add it into the MST
     HeapElement he = H.DeleteMin();
-    // std::cout << "delete\n";
-    // for (int i=0; i<H.heapValues.size(); ++i) {
-    //   std::cout << H.heapValues[i].vindex << " ";
-    // }
-    // std::cout << std::endl;
     weight += he.dist;
-    //std::cout << he.vindex << " " << prev[he.vindex] << " " << he.dist << std::endl;
-    //std::cout << he.vindex << " " << prev[he.vindex] << " " << weight << std::endl;
     Vertex v = g.vertices[he.vindex];
     inMST[v.index] = true;
 
@@ -130,21 +108,21 @@ float prim (Graph& g, int n) {
       }
     } else {
       for (int i=0; i<v.v_edges.size(); ++i) {
+        //completely connected graph -> 
+        //  there is an edge between v and every other vertex w, so iterate over every edge touching v
         Edge e = v.v_edges[i];
         Vertex w = g.vertices[e.u];
         if (w.index == v.index) {
+          //no edge from a node to itself -> we know v is in MST, so it will skip the next step
           w = g.vertices[e.v];
         }
         if (!inMST[w.index] && (dist[w.index] > e.length)) {
-          //std::cout << w.index << " " << inMST[w.index];
+          //if a smaller edge exists connecting the vertex to the MST, 
+          //  adjust its current shortest connecting edge length
           dist[w.index] = e.length;
           prev[w.index] = v.index;
           H.Insert(w.index,e.length);
         }
-        // for (int i=0; i<H.heapValues.size(); ++i) {
-        //   std::cout << H.heapValues[i].vindex << " ";
-        // }
-        // std::cout << std::endl;
       }
     }
   }

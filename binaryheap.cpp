@@ -1,6 +1,7 @@
 #include "binaryheap.h"
 #include <iostream>
 
+// initializes binary heap with zero elements
 BinaryHeap::BinaryHeap(int numNodes) {
 	size = 0;
 	for (int i=0; i<numNodes; ++i) {
@@ -8,6 +9,7 @@ BinaryHeap::BinaryHeap(int numNodes) {
 	}
 }
 
+// inserts an element into the binary heap and adjusts the heap to a normal binary heap
 void BinaryHeap::Insert(int vindex, float dist) {
 	if (positions[vindex] != -1) {
 		heapValues[positions[vindex]].dist = dist;
@@ -36,14 +38,9 @@ void BinaryHeap::Insert(int vindex, float dist) {
 		heapValues[i] = v;
 	}
 	positions[heapValues[i].vindex] = i;
-
-	// std::cout << "positions ";
-	// for (int i=0; i<positions.size(); ++i) {
-	// 	std::cout << positions[i] << " ";
-	// }
-	// std::cout << std::endl;
 }
 
+// deletes and returns heap element with the minimum value and adjusts heap back to normal
 HeapElement BinaryHeap::DeleteMin() {
 	if (size < 1) {
 		std::cerr << "No elements\n";
@@ -55,16 +52,10 @@ HeapElement BinaryHeap::DeleteMin() {
 	positions[min.vindex] = -1;
 	size--;
 	heapify(0);
-
-	// std::cout << "positions ";
-	// for (int i=0; i<positions.size(); ++i) {
-	// 	std::cout << positions[i] << " ";
-	// }
-	// std::cout << std::endl;
-
 	return min;
 }
 
+// assuming children are properly formed heaps, adjust binary heap structure from given node
 void BinaryHeap::heapify(int i) {
 	int l = left(i);
 	int r = right(i);
@@ -88,15 +79,17 @@ void BinaryHeap::heapify(int i) {
 	}
 }
 
-// treat as 1-indexed
+// find the index in the vector of the left child
 int BinaryHeap::left(int i) {
 	return (2*(i+1))-1;
 }
 
+// find the index in the vector of the right child
 int BinaryHeap::right(int i) {
 	return (2*(i+1)+1)-1;
 }
 
+// find the index in the vector of the parent
 int BinaryHeap::parent(int i) {
 	return ((i+1)/2)-1; //parent -1 means it is root
 }
