@@ -6,6 +6,8 @@
 bool compareEdges(Edge e1, Edge e2);
 float kruskal (Graph& g, int n);
 
+float maxWeight = 0;
+
 int main(int argc, char *argv[]) {
 
   // read in input from user
@@ -38,7 +40,7 @@ int main(int argc, char *argv[]) {
   // for numtrials, creates an appropriate graph and sums weight
   float avg = 0.;
   for (int i = 0; i < numtrials; i++){
-    std::cout << "Trial " << i << ": ";
+    //std::cout << "Trial " << i << ": ";
     //std::cout << "Creating graph\n";
     Graph g = Graph(numpoints, dim);
     avg += kruskal(g, numpoints);
@@ -47,6 +49,7 @@ int main(int argc, char *argv[]) {
   avg /= numtrials;
 
   // return output
+  std::cout << "max edge weight: " << maxWeight << std::endl;
   std::cout << avg << " " << numpoints << " " << numtrials << " " << dim << std::endl;
   return 0;
 }
@@ -75,7 +78,7 @@ float kruskal (Graph& g, int n) {
   // simultaneously, add the weight of the edge to the MST
   int mstedges = 0;
   int i = 0;
-  float maxWeight = 0;
+  
   while (mstedges < n - 1){
     if (g.find(g.edges[i].u.index) != g.find(g.edges[i].v.index)){
       weight += g.edges[i].length;
@@ -85,7 +88,6 @@ float kruskal (Graph& g, int n) {
     }
     i++;
   }
-  std::cout << "max edge weight: " << maxWeight << std::endl;
 
   return weight;
 }
