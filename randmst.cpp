@@ -82,6 +82,20 @@ float prim (Graph& g, int n) {
   inMST[0] = true;
   prev[0] = 0;
 
+  // for (int i=0; i<n; i++) {
+  //   Vertex v = g.vertices[i];
+  //   for (int j=i+1; j<n; j++) {
+  //     Vertex w = g.vertices[j];
+  //     float elength = 0;
+  //     for (int d=0; d<g.dim; ++d) {
+  //       elength += pow((w.coords[d] - v.coords[d]),2);
+  //     }
+  //     elength = sqrt(elength);
+  //     std::cout << i << " " << j << " " << elength << std::endl;
+  //   }
+  // }
+  // std::cout << std::endl;
+
 
   while (H.size > 0) {
     HeapElement he = H.DeleteMin();
@@ -91,6 +105,7 @@ float prim (Graph& g, int n) {
     // }
     // std::cout << std::endl;
     weight += he.dist;
+    //std::cout << he.vindex << " " << prev[he.vindex] << " " << he.dist << std::endl;
     //std::cout << he.vindex << " " << prev[he.vindex] << " " << weight << std::endl;
     Vertex v = g.vertices[he.vindex];
     inMST[v.index] = true;

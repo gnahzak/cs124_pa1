@@ -1,0 +1,5 @@
+./randmst 0 8192 5 0
+0.00324127 8192 5 0
+./randmst 0 8192 5 1
+Dimension must be 0, 2, 3, or 4
+./randmst 0 8192 5 2
