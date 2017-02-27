@@ -8,6 +8,7 @@
 
 bool compareEdges(Edge e1, Edge e2);
 float prim (Graph& g, int n);
+float kruskal (Graph& g, int n);
 
 float maxWeight = 0;
 
@@ -43,13 +44,11 @@ int main(int argc, char *argv[]) {
   // for numtrials, creates an appropriate graph and sums weight
   float avg = 0.;
   for (int i = 0; i < numtrials; i++){
-    std::cout << "Trial " << i << ": \n";
     Graph g = Graph(numpoints, dim);
-    std::cout << "Completed Graph Creation\n";
     if (dim > 0) {
       avg += prim(g, numpoints);
     } else {
-      //avg += kruskal(g,numpoints);
+      avg += kruskal(g,numpoints);
     }
     std::this_thread::sleep_for(std::chrono::seconds(1)); //to properly reseed random number generator
   }
@@ -113,6 +112,32 @@ float prim (Graph& g, int n) {
       }
     }
   }
+  return weight;
+}
+
+float kruskal (Graph& g, int n) {
+
+  float weight = 0.;
+
+  // sort edges in e
+  std::sort(g.edges.begin(), g.edges.end(), compareEdges);
+
+  // iterate through edges in increasing order until n-1 edges
+  // have been added to the MST
+  // simultaneously, add the weight of the edge to the MST
+  int mstedges = 0;
+  int i = 0;
+
+  while (mstedges < n - 1){
+    if (g.find(g.edges[i].u.index) != g.find(g.edges[i].v.index)){
+      weight += g.edges[i].length;
+      g.combine(g.edges[i].u.index, g.edges[i].v.index);
+      mstedges++;
+      if (g.edges[i].length > maxWeight) maxWeight = g.edges[i].length;
+    }
+    i++;
+  }
+
   return weight;
 }
 
