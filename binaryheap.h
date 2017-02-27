@@ -14,7 +14,7 @@ class BinaryHeap {
   public:
     int size;
     std::vector<HeapElement> heapValues;
-    std::vector<int> positions; //positions[i] contains the heapValues index of the vertex
+    std::vector<int> positions; //positions[i] contains the heapValues index of any given vertex
 
     BinaryHeap(int numNodes);
     void Insert(int vindex, float dist);

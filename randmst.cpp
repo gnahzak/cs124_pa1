@@ -46,7 +46,11 @@ int main(int argc, char *argv[]) {
     std::cout << "Trial " << i << ": \n";
     Graph g = Graph(numpoints, dim);
     std::cout << "Completed Graph Creation\n";
-    avg += prim(g, numpoints);
+    if (dim > 0) {
+      avg += prim(g, numpoints);
+    } else {
+      //avg += kruskal(g,numpoints);
+    }
     std::this_thread::sleep_for(std::chrono::seconds(1)); //to properly reseed random number generator
   }
   avg /= numtrials;
@@ -91,60 +95,24 @@ float prim (Graph& g, int n) {
     Vertex v = g.vertices[he.vindex];
     inMST[v.index] = true;
 
-    if (g.dim > 0) {
-      for (int i=0; i<n; ++i) {
-        Vertex w = g.vertices[i];
-        if (w.index != v.index) {
-          if (!inMST[w.index]) {
-            float elength = 0;
-            for (int d=0; d<g.dim; ++d) {
-              elength += pow((w.coords[d] - v.coords[d]),2);
-            }
-            elength = sqrt(elength);
-            if (dist[w.index] > elength) {
-              dist[w.index] = elength;
-              prev[w.index] = v.index;
-              H.Insert(w.index,elength);
-            }
+    for (int i=0; i<n; ++i) {
+      Vertex w = g.vertices[i];
+      if (w.index != v.index) {
+        if (!inMST[w.index]) {
+          float elength = 0;
+          for (int d=0; d<g.dim; ++d) {
+            elength += pow((w.coords[d] - v.coords[d]),2);
+          }
+          elength = sqrt(elength);
+          if (dist[w.index] > elength) {
+            dist[w.index] = elength;
+            prev[w.index] = v.index;
+            H.Insert(w.index,elength);
           }
         }
       }
-    } else {
-      for (int i=0; i<n; ++i) {
-        Vertex w = g.vertices[i];
-        if (w.index != v.index && !assigned[v.index][w.index]) {
-          if (!inMST[w.index]) {
-            float elength = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-            assigned[v.index][w.index] = true;
-            if (dist[w.index] > elength) {
-              dist[w.index] = elength;
-              prev[w.index] = v.index;
-              H.Insert(w.index,elength);
-            }
-          }
-        }
-      }
-      // for (int i=0; i<v.v_edges.size(); ++i) {
-
-      //   //completely connected graph ->
-      //   //  there is an edge between v and every other vertex w, so iterate over every edge touching v
-      //   Edge e = v.v_edges[i];
-      //   Vertex w = g.vertices[e.u];
-      //   if (w.index == v.index) {
-      //     //no edge from a node to itself -> we know v is in MST, so it will skip the next step
-      //     w = g.vertices[e.v];
-      //   }
-      //   if (!inMST[w.index] && (dist[w.index] > e.length)) {
-      //     //if a smaller edge exists connecting the vertex to the MST,
-      //     //  adjust its current shortest connecting edge length
-      //     dist[w.index] = e.length;
-      //     prev[w.index] = v.index;
-      //     H.Insert(w.index,e.length);
-      //   }
-      // }
     }
   }
-  weight /= n;
   return weight;
 }
 
