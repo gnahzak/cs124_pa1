@@ -3,6 +3,8 @@
 #include "graphs.h"
 #include "binaryheap.h"
 #include <iostream>
+#include <thread>
+#include <chrono>
 
 bool compareEdges(Edge e1, Edge e2);
 float prim (Graph& g, int n);
@@ -45,7 +47,7 @@ int main(int argc, char *argv[]) {
     Graph g = Graph(numpoints, dim);
     std::cout << "Completed Graph Creation\n";
     avg += prim(g, numpoints);
-    sleep(1); //to properly reseed random number generator
+    std::this_thread::sleep_for(std::chrono::seconds(1)); //to properly reseed random number generator
   }
   avg /= numtrials;
 
@@ -61,6 +63,7 @@ int main(int argc, char *argv[]) {
 
 float prim (Graph& g, int n) {
   float weight = 0.;
+  bool assigned[n][n];
 
   float dist[n];
   bool inMST[n];
@@ -107,23 +110,38 @@ float prim (Graph& g, int n) {
         }
       }
     } else {
-      for (int i=0; i<v.v_edges.size(); ++i) {
-        //completely connected graph -> 
-        //  there is an edge between v and every other vertex w, so iterate over every edge touching v
-        Edge e = v.v_edges[i];
-        Vertex w = g.vertices[e.u];
-        if (w.index == v.index) {
-          //no edge from a node to itself -> we know v is in MST, so it will skip the next step
-          w = g.vertices[e.v];
-        }
-        if (!inMST[w.index] && (dist[w.index] > e.length)) {
-          //if a smaller edge exists connecting the vertex to the MST, 
-          //  adjust its current shortest connecting edge length
-          dist[w.index] = e.length;
-          prev[w.index] = v.index;
-          H.Insert(w.index,e.length);
+      for (int i=0; i<n; ++i) {
+        Vertex w = g.vertices[i];
+        if (w.index != v.index && !assigned[v.index][w.index]) {
+          if (!inMST[w.index]) {
+            float elength = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+            assigned[v.index][w.index] = true;
+            if (dist[w.index] > elength) {
+              dist[w.index] = elength;
+              prev[w.index] = v.index;
+              H.Insert(w.index,elength);
+            }
+          }
         }
       }
+      // for (int i=0; i<v.v_edges.size(); ++i) {
+
+      //   //completely connected graph ->
+      //   //  there is an edge between v and every other vertex w, so iterate over every edge touching v
+      //   Edge e = v.v_edges[i];
+      //   Vertex w = g.vertices[e.u];
+      //   if (w.index == v.index) {
+      //     //no edge from a node to itself -> we know v is in MST, so it will skip the next step
+      //     w = g.vertices[e.v];
+      //   }
+      //   if (!inMST[w.index] && (dist[w.index] > e.length)) {
+      //     //if a smaller edge exists connecting the vertex to the MST,
+      //     //  adjust its current shortest connecting edge length
+      //     dist[w.index] = e.length;
+      //     prev[w.index] = v.index;
+      //     H.Insert(w.index,e.length);
+      //   }
+      // }
     }
   }
   weight /= n;

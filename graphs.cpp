@@ -14,16 +14,16 @@ Graph::Graph(int n, int dim) {
 			v.dim = dim;
 			v.index = i;
 			vertices.push_back(v);
-			for (int j=0; j<i; j++) {
-				Vertex u = vertices[j];
-				Edge e;
-				e.u = u.index;
-				e.v = v.index;
-				e.length = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
-				edges.push_back(e);
-				vertices[e.u].v_edges.push_back(e);
-				v.v_edges.push_back(e);
-			}
+			// for (int j=0; j<i; j++) {
+			// 	Vertex u = vertices[j];
+			// 	Edge e;
+			// 	e.u = u.index;
+			// 	e.v = v.index;
+			// 	e.length = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+			// 	edges.push_back(e);
+			// 	vertices[e.u].v_edges.push_back(e);
+			// 	v.v_edges.push_back(e);
+			// }
 
 		}
 	}
